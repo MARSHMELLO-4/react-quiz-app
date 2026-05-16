@@ -10,16 +10,17 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import {auth} from '/Users/aman2/OneDrive/Documents/react-quiz-app/src/Config/firebaseconfig'
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../redux/slices/userSlice";
 const Login = () => {
     const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
+  const dispatch = useDispatch()
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -29,7 +30,12 @@ const Login = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await signInWithEmailAndPassword(auth, formData.email, formData.password).then((userCredential) => {
-        const user = userCredential.user;
+        const user = userCredential;
+        console.log("The whole user is  : ", user);
+        dispatch(setCurrentUser({
+          uid : userCredential.user.uid,
+          email : userCredential.user.email 
+        }))
         console.log("user logged in : ", user)
         navigate('/dashboard')
     }).catch((error : Error) => {
