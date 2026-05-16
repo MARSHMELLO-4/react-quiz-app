@@ -1,73 +1,99 @@
-# React + TypeScript + Vite
+# React Quiz App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based quiz application with user authentication, quiz categories, score tracking, and protected user dashboards.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- User registration and login
+- Protected routes for authenticated users
+- Quiz listing by category or difficulty
+- Multiple-choice quiz questions
+- Timer-based quiz mode
+- Score calculation
+- Result summary after quiz completion
+- User dashboard
+- Quiz history
+- Logout functionality
+- Responsive UI for desktop and mobile
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Frontend
+- React
+- React Router
+- Context API or Redux Toolkit
+- Axios or Fetch API
+- CSS / Tailwind CSS / Material UI
 
-## Expanding the ESLint configuration
+### Authentication
+- JWT-based authentication
+- Login and signup forms
+- Protected routes
+- Token storage using localStorage or secure cookies
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Backend Options
+You can use one of the following:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Firebase Authentication
+- Supabase Authentication
+- Node.js + Express + MongoDB
+- Appwrite
+- Auth0
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Recommended Backend for Beginners
+Firebase or Supabase is recommended because authentication is easier to set up.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Pages
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Public Pages
+- Home Page
+- Login Page
+- Register Page
+- About Page
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Protected Pages
+- Dashboard
+- Quiz Categories
+- Quiz Page
+- Results Page
+- Profile Page
+- Quiz History Page
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Folder Structure
+
+```txt
+react-quiz-app/
+│
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── Navbar.jsx
+│   │   ├── QuizCard.jsx
+│   │   ├── QuestionCard.jsx
+│   │   └── ProtectedRoute.jsx
+│   │
+│   ├── context/
+│   │   └── AuthContext.jsx
+│   │
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── Login.jsx
+│   │   ├── Register.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── Quiz.jsx
+│   │   ├── Result.jsx
+│   │   └── Profile.jsx
+│   │
+│   ├── services/
+│   │   ├── authService.js
+│   │   └── quizService.js
+│   │
+│   ├── data/
+│   │   └── questions.js
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+│
+├── package.json
+└── README.md
