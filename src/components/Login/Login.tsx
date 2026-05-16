@@ -7,11 +7,13 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router";
-
+import { Link, useNavigate } from "react-router";
+import {signInWithEmailAndPassword} from 'firebase/auth'
+import {auth} from '/Users/aman2/OneDrive/Documents/react-quiz-app/src/Config/firebaseconfig'
 const Login = () => {
+    const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -24,11 +26,15 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    console.log("Username is:", formData.username);
-    console.log("Password is:", formData.password);
+    await signInWithEmailAndPassword(auth, formData.email, formData.password).then((userCredential) => {
+        const user = userCredential.user;
+        console.log("user logged in : ", user)
+        navigate('/dashboard')
+    }).catch((error : Error) => {
+        console.log("Error occurred while loggin in : ", error.message )
+    })
   };
 
   return (
@@ -65,9 +71,9 @@ const Login = () => {
           <form onSubmit={handleSubmit}>
             <Stack spacing={2.5}>
               <TextField
-                label="Username"
-                name="username"
-                value={formData.username}
+                label="Email"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
                 fullWidth
                 required

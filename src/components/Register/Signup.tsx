@@ -7,11 +7,13 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router";
-
+import { Link, useNavigate } from "react-router";
+import {createUserWithEmailAndPassword} from 'firebase/auth'
+import {auth} from '/Users/aman2/OneDrive/Documents/react-quiz-app/src/Config/firebaseconfig'
 const Signup = () => {
+    const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -23,11 +25,16 @@ const Signup = () => {
     }));
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log("Username is:", formData.username);
-    console.log("Password is:", formData.password);
+    await createUserWithEmailAndPassword(auth, formData.email, formData.password).then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user)
+        navigate('/')
+    }).catch((error : Error) => {
+        console.log("error occurred while creating new user", error.message);
+    })
   };
 
   return (
@@ -63,9 +70,10 @@ const Signup = () => {
           <form onSubmit={handleSubmit}>
             <Stack spacing={2.5}>
               <TextField
-                label="Username"
-                name="username"
-                value={formData.username}
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
                 onChange={handleChange}
                 fullWidth
                 required
