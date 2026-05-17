@@ -25,3 +25,19 @@ export type QuizType = {
   questionCount: number;
   plays: number;
 };
+
+export type QuestionType = {
+  id : string,
+  text : string,
+  type : string,
+  difficulty : string,
+  explaination : string,
+  order : number,
+  answers : AnswerType[]
+}
+
+export type AnswerType = {
+  id : string,
+  text : string,
+  isCorrect : boolean
+}

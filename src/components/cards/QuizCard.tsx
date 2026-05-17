@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import type { QuizType } from "../../types/QuizType";
 import {
   Box,
@@ -11,12 +11,14 @@ import {
   Chip,
   Stack,
   LinearProgress,
+  TextField,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import SchoolIcon from "@mui/icons-material/School";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import HelpIcon from "@mui/icons-material/Help";
 import { imgMap } from "../utils/imgMap";
+import { useNavigate } from "react-router";
 
 // Styled card with elevation and hover effects
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -73,6 +75,15 @@ const QuizCard = (props: QuizType) => {
     }
   };
 
+  const [timerModal, setTimerModal] = useState(false);
+  const [time, setTime] = useState(10);
+  const navigate = useNavigate()
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Convert to number, or 0 if empty
+    setTime(value === '' ? 0 : Number(value));
+  };
+
   const getDifficultyValue = (difficulty: string): number => {
     switch (difficulty?.toLowerCase()) {
       case "easy":
@@ -86,6 +97,15 @@ const QuizCard = (props: QuizType) => {
         return 0;
     }
   };
+
+  const handleStartQuiz = () => {
+    if(timerModal === false) {
+      setTimerModal(true);
+    }
+    else{
+      navigate(`/quiz/${time}/${props.id}/`)
+    }
+  }
 
   return (
     <StyledCard>
@@ -214,9 +234,20 @@ const QuizCard = (props: QuizType) => {
             textTransform: "none",
             fontWeight: 600,
           }}
+          onClick={handleStartQuiz}
         >
-          Learn More
+          Start Quiz
         </Button>
+        {
+          timerModal && <TextField
+            label="Time (seconds)"
+            inputMode="numeric"
+            type="number"
+            variant="outlined"
+            value={time}
+            onChange={handleTimeChange}
+          />
+        }
       </CardActions>
     </StyledCard>
   );

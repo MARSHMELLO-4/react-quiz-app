@@ -12,7 +12,6 @@ interface CategoryType {
   request?: any;
 }
 
-
 export const fetchCategories = async () => {
   try {
     const res: CategoryType = await axios.get(
@@ -28,7 +27,7 @@ export const fetchCategories = async () => {
 
 export const fetchQuizzes = async () => {
   try {
-    const res: Record<any,any> = await axios.get(
+    const res: Record<any, any> = await axios.get(
       `${BASE_URL}/quizzes`,
       apiConfig,
     );
@@ -36,5 +35,18 @@ export const fetchQuizzes = async () => {
     return res.data;
   } catch (error: any) {
     console.log("Cant fetch initial categories due to error", error.message);
+  }
+};
+
+export const fetchQuiz = async (id : string) => {
+  try {
+    const res: Record<any, any> = await axios.get(
+      `${BASE_URL}/quizzes/${id}`,
+      apiConfig,
+    );
+    console.log("Quiz Data fetched from api", res);
+    return res;
+  } catch (error: any) {
+    console.log("Cant fetch questions due to error", error.message);
   }
 };
