@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import type { QuestionType } from "../../types/QuizType";
 import { fetchQuiz } from "../api/apiFetch";
 import QuestionCard from "../cards/QuestionCard";
@@ -10,7 +10,13 @@ const Questions = () => {
   const [questions, setQuestions] = useState<QuestionType[]>([]); //TODO : Question type has to be made
   const params = useParams();
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate()
+  const handleSubmit = () => {  
+    navigate('/result')
+  }
   useEffect(() => {
+    
+
     if (params.id) {
       fetchQuiz(params.id).then((data) => {
         if (data) {
@@ -40,7 +46,7 @@ const Questions = () => {
             );
           })}
       </Stack>
-      <Button>
+      <Button onClick={handleSubmit}>
         See Results & Solutions
       </Button>
     </Box>

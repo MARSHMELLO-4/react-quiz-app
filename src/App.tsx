@@ -5,6 +5,7 @@ import Signup from './components/Register/Signup'
 import Dashboard from './components/Dashboard/Dashboard'
 import QuestionCard from './components/cards/QuestionCard'
 import Questions from './components/questions/Questions'
+import Result from './components/Results/Result'
 function App() {
   return (
     <BrowserRouter>
@@ -14,6 +15,7 @@ function App() {
           <Route path='/signup' element={<Signup/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/quiz/:time/:id/' element={<Questions/>}/>
+          <Route path='/result' element={<Result/>}/>
         </Routes>
       </div>
     </BrowserRouter>
